@@ -226,7 +226,7 @@ CONFIG = ml_collections.ConfigDict({
             },
             'fixed_size': True,
             'subsample_templates': False,  # We want top templates.
-            'masked_msa_replace_fraction': 0.15,
+            'masked_msa_replace_fraction': 0.0,
             'max_msa_clusters': 512,
             'max_templates': 4,
             'num_ensemble': 1,
@@ -542,7 +542,7 @@ CONFIG_MULTIMER = ml_collections.ConfigDict({
             'num_extra_msa': 2048,
             'masked_msa': {
                 'profile_prob': 0.1,
-                'replace_fraction': 0.15,
+                'replace_fraction': 0.0,
                 'same_prob': 0.1,
                 'uniform_prob': 0.1
             },
