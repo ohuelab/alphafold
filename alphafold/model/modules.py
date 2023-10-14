@@ -1935,10 +1935,12 @@ class EmbeddingsAndEvoformer(hk.Module):
         offset = jnp.clip(offset + c.max_relative_feature, a_min=0, a_max=2 * c.max_relative_feature)
         # Forced clipping by asym_id of offset only when asym flag is true
         asym = batch.pop("asym", False)
+        logger.info(f"asym is {asym}")
         if asym:
           o = batch['asym_id'][:,None] - batch['asym_id'][None,:]
           offset = jnp.where(o == 0, offset, jnp.where(o > 0, 2*c.max_relative_feature, 0))
         rel_pos = jax.nn.one_hot(offset, 2 * c.max_relative_feature + 1).astype(dtype)
+        logger.info(f"{rel_pos}")
         pair_activations += common_modules.Linear(
             c.pair_channel, name='pair_activiations')(rel_pos)
 
