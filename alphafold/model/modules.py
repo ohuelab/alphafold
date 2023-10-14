@@ -30,7 +30,6 @@ from alphafold.model import utils
 import haiku as hk
 import jax
 import jax.numpy as jnp
-import numpy as np
 import logging
 logger = logging.getLogger(__name__)
 
@@ -1941,7 +1940,7 @@ class EmbeddingsAndEvoformer(hk.Module):
           o = batch['asym_id'][:,None] - batch['asym_id'][None,:]
           offset = jnp.where(o == 0, offset, jnp.where(o > 0, 2*c.max_relative_feature, 0))
         rel_pos = jax.nn.one_hot(offset, 2 * c.max_relative_feature + 1).astype(dtype)
-        logger.info(f"{np.array(offset)}")
+        logger.info(f"{offset}")
         pair_activations += common_modules.Linear(
             c.pair_channel, name='pair_activiations')(rel_pos)
 
