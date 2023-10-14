@@ -30,6 +30,8 @@ from alphafold.model import utils
 import haiku as hk
 import jax
 import jax.numpy as jnp
+import logging
+logger = logging.getLogger(__name__)
 
 def softmax_cross_entropy(logits, labels):
   """Computes softmax cross entropy given logits and one-hot class labels."""
@@ -1931,7 +1933,9 @@ class EmbeddingsAndEvoformer(hk.Module):
         pos = batch['residue_index']
         offset = batch.pop("offset", pos[:,None] - pos[None,:])
         offset = jnp.clip(offset + c.max_relative_feature, a_min=0, a_max=2 * c.max_relative_feature)
-        if "asym_id" in batch:
+        # Forced clipping by asym_id of offset only when asym flag is true
+        asym = batch.pop("asym", False)
+        if asym:
           o = batch['asym_id'][:,None] - batch['asym_id'][None,:]
           offset = jnp.where(o == 0, offset, jnp.where(o > 0, 2*c.max_relative_feature, 0))
         rel_pos = jax.nn.one_hot(offset, 2 * c.max_relative_feature + 1).astype(dtype)
