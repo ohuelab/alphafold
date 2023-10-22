@@ -377,7 +377,7 @@ CONFIG = ml_collections.ConfigDict({
             }
         },
         'global_config': {
-            'bfloat16': True,
+            'bfloat16': False,
             'bfloat16_output': False,
             'deterministic': False,
             'multimer_mode': False,
@@ -615,7 +615,7 @@ CONFIG_MULTIMER = ml_collections.ConfigDict({
             },
         },
         'global_config': {
-            'bfloat16': True,
+            'bfloat16': False,
             'bfloat16_output': False,
             'deterministic': False,
             'multimer_mode': True,
